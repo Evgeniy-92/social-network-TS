@@ -4,8 +4,8 @@ import Posts from "./Posts/Posts";
 
 function MyPosts() {
     return (
-        <div>
-            My post
+        <div className={s.postsBlock}>
+            <h3>My post</h3>
             <div>
                 <div>
                     <textarea></textarea>

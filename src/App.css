@@ -4,7 +4,14 @@
     margin: 0 auto;
     grid-template-rows: 60px 1fr;
     grid-template-columns: 2fr 10fr;
+    grid-gap: 5px;
     grid-template-areas:
     "h h"
     "n c";
+}
+
+.app-wrapper-content {
+    grid-area: c;
+    background-color: #5F4A80;
+    border-radius: 10px;
 }
