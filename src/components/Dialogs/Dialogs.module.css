@@ -1,27 +1,16 @@
 .dialogs {
     display: grid;
     grid-template-columns: 2fr 10fr;
+    height: 100%;
 }
 
-.dialogsItems {
-    background-color: #775797;
-    padding: 10px;
-}
 
 .dialogsItems a.active {
     color: #f5d270;
 }
 
-.dialogItem a {
-    color: floralwhite;
-    text-decoration: none;
-}
 
 .messages {
     background-color: rgba(129, 83, 184, 0.58);
     padding: 10px;
-}
-
-.message {
-
 }

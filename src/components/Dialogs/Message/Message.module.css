@@ -1,0 +1,15 @@
+.message {
+    display: flex;
+    align-items: center;
+    color: floralwhite;
+    margin: 10px;
+}
+
+.circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #5F4A80;
+    margin: 5px;
+}
+

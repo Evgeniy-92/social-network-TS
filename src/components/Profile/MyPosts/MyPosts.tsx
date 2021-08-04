@@ -1,8 +1,16 @@
 import React from "react";
 import s from "./MyPosts.module.css";
 import Posts from "./Posts/Posts";
+import {PostDataType} from "../../../redux/state";
 
-function MyPosts() {
+type MyPostsPropsType = {
+    posts: Array<PostDataType>
+}
+
+function MyPosts(props: MyPostsPropsType) {
+
+    const postElement = props.posts.map(p => <Posts key={p.id} message={p.message} likesCount={p.likesCount}/>)
+
     return (
         <div className={s.postsBlock}>
             <h3>My post</h3>
@@ -15,9 +23,7 @@ function MyPosts() {
                 </div>
             </div>
             <div className={s.posts}>
-                <Posts message={"Hello world"} countLikes={5}/>
-                <Posts message={"Ho Ho Ho"} countLikes={7}/>
-                <Posts message={"Yo Yo Yo"} countLikes={45}/>
+                {postElement}
             </div>
         </div>
     )

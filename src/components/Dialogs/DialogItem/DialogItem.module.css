@@ -1,0 +1,33 @@
+.dialogItem {
+    display: flex;
+    align-items: center;
+    padding: 7px;
+}
+
+.dialogItem:hover {
+    background-color: rgba(129, 83, 184, 0.58);
+}
+
+.dialogItem a {
+    color: floralwhite;
+    text-decoration: none;
+}
+
+.dialogItem a.active {
+    color: #f5d270;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 13px;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
