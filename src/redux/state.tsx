@@ -1,4 +1,5 @@
 import React from "react";
+import {renderTree} from '../renderTree';
 
 
 export type PostDataType = {
@@ -22,10 +23,12 @@ export type FriendsDataType = {
 }
 export type ProfilePageType = {
     postData: Array<PostDataType>
+    newPostText: string
 }
 export type DialogsPageType = {
     dialogsData: Array<DialogDataType>
     messagesData: Array<MessagesDataType>
+    newMessageText: string
 }
 export type SidebarType = {
     friendsData: Array<FriendsDataType>
@@ -43,6 +46,7 @@ const state: StateType = {
             {id: 2, message: "Ho Ho Ho", likesCount: 7},
             {id: 3, message: "Yo Yo Yo", likesCount: 45},
         ],
+        newPostText: ''
     },
     dialogsPage: {
         dialogsData: [
@@ -59,6 +63,7 @@ const state: StateType = {
             {id: 2, message: "How is your it-kamasutra"},
             {id: 3, message: "YoYoYo"},
         ],
+        newMessageText: ''
     },
     sidebar: {
         friendsData: [
@@ -68,5 +73,30 @@ const state: StateType = {
         ]
     }
 }
+
+export const addPost = () => {
+    const newPost: PostDataType = {id: 4, message: state.profilePage.newPostText, likesCount: 0}
+    state.profilePage.postData.push(newPost)
+    state.profilePage.newPostText = ''
+    renderTree(state)
+}
+
+export const sendMessage = () => {
+    const newMessage: MessagesDataType = {id: 4, message: state.dialogsPage.newMessageText}
+    state.dialogsPage.messagesData.push(newMessage)
+    state.dialogsPage.newMessageText = ''
+    renderTree(state)
+}
+
+export const postTextChange = (value: string) => {
+    state.profilePage.newPostText = value
+    renderTree(state)
+}
+
+export const messageTextChange = (value: string) => {
+    state.dialogsPage.newMessageText = value
+    renderTree(state)
+}
+
 
 export default state

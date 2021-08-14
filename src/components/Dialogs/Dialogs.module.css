@@ -14,3 +14,8 @@
     background-color: rgba(129, 83, 184, 0.58);
     padding: 10px;
 }
+
+.newMessage {
+    display: flex;
+    align-items: center;
+}
