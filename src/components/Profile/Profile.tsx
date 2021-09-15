@@ -1,20 +1,18 @@
 import React from "react";
 import s from "./Profile.module.css";
-import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {postTextChange, ProfilePageType} from '../../redux/state';
+import {StoreType} from '../../redux/redux-store';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 type ProfilePropsType = {
-    profilePage: ProfilePageType
-    addPostCallback: () => void
-    postChange: (value: string) => void
+    store: StoreType
 }
 
 function Profile(props: ProfilePropsType) {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts profilePage={props.profilePage} addPostCallback={props.addPostCallback} postChange={postTextChange}/>
+            <MyPostsContainer store={props.store}/>
         </div>
     )
 }

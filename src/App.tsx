@@ -1,19 +1,15 @@
 import React from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
-import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from 'react-router-dom';
-import {StateType} from "./redux/state";
+import {StoreType} from './redux/redux-store';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
+import NavbarContainer from './components/Navbar/NavbarContainer';
 
 
 type AppPropsType = {
-    state: StateType
-    addPostCallback: () => void
-    postChange: (value: string) => void
-    sendMessageCallback: () => void
-    messageTextChange: (value: string) => void
+    store: StoreType
 }
 
 function App(props: AppPropsType) {
@@ -21,10 +17,18 @@ function App(props: AppPropsType) {
         <BrowserRouter>
             <div className={'app-wrapper'}>
                 <Header/>
-                <Navbar friendsData={props.state.sidebar.friendsData}/>
+                <NavbarContainer store={props.store}/>
                 <div className={"app-wrapper-content"}>
-                    <Route path={"/profile"} render= {() => <Profile profilePage={props.state.profilePage} addPostCallback={props.addPostCallback} postChange={props.postChange}/>}/>
-                    <Route path={"/dialogs"} render={() => <Dialogs dialogsPage={props.state.dialogsPage} sendMessageCallback = {props.sendMessageCallback} messageTextChange={props.messageTextChange}/>}/>
+                    <Route path={"/profile"} render= {() =>
+                        <Profile
+                            store={props.store}
+                        />}
+                    />
+                    <Route path={"/dialogs"} render={() =>
+                        <DialogsContainer
+                            store={props.store}
+                        />}
+                    />
                 </div>
 
             </div>

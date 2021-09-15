@@ -2,12 +2,13 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import {DialogsPageType, messageTextChange} from '../../redux/state';
+import {DialogsPageType} from '../../redux/redux-store';
+
 
 type DialogsPropsType = {
     dialogsPage: DialogsPageType
     sendMessageCallback: () => void
-    messageTextChange: (value: string) => void
+    changeHandlerCallback: (newValue: string) => void
 }
 
 
@@ -26,7 +27,7 @@ function Dialogs(props: DialogsPropsType) {
 
     const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const newValue = e.currentTarget.value
-        props.messageTextChange(newValue)
+        props.changeHandlerCallback(newValue)
     }
 
 

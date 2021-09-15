@@ -1,5 +1,7 @@
 import React from "react";
-import {renderTree} from '../renderTree';
+import {addPostAC, postTextChangeAC, profileReducer} from './profile-reducer';
+import {dialogReducer, messageTextChangeAC, sendMessageAC} from './dialog-reducer';
+import {sidebarReducer} from './sidebar-reducer';
 
 
 export type PostDataType = {
@@ -38,8 +40,23 @@ export type StateType = {
     dialogsPage: DialogsPageType
     sidebar: SidebarType
 }
+export type StoreType = {
+    _state: StateType
+    _callSubscriber: () => void
+    subscriber: (observer: () => void) => void
+    getState: () => StateType
+    dispatch: (action: ActionType) => void
+}
 
-const state: StateType = {
+
+export type ActionType =
+    ReturnType<typeof addPostAC> | ReturnType<typeof postTextChangeAC>
+    | ReturnType<typeof sendMessageAC> | ReturnType<typeof messageTextChangeAC>
+
+
+
+let store: StoreType = {
+    _state: {
     profilePage: {
         postData: [
             {id: 1, message: "Hello world", likesCount: 5},
@@ -72,31 +89,25 @@ const state: StateType = {
             {id: 3, name: "Artem", avatar: "https://steamuserimages-a.akamaihd.net/ugc/921428922390606987/2C883A46ECD723CD92FCA1719FF706AE09286B71/"},
         ]
     }
-}
+},
 
-export const addPost = () => {
-    const newPost: PostDataType = {id: 4, message: state.profilePage.newPostText, likesCount: 0}
-    state.profilePage.postData.push(newPost)
-    state.profilePage.newPostText = ''
-    renderTree(state)
-}
+    _callSubscriber() {
+    },
+    getState() {
+        return this._state
+    },
+    subscriber(observer: () => void) {
+        this._callSubscriber = observer
+    },
 
-export const sendMessage = () => {
-    const newMessage: MessagesDataType = {id: 4, message: state.dialogsPage.newMessageText}
-    state.dialogsPage.messagesData.push(newMessage)
-    state.dialogsPage.newMessageText = ''
-    renderTree(state)
-}
+    dispatch(action) {
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogReducer(this._state.dialogsPage, action)
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
 
-export const postTextChange = (value: string) => {
-    state.profilePage.newPostText = value
-    renderTree(state)
-}
-
-export const messageTextChange = (value: string) => {
-    state.dialogsPage.newMessageText = value
-    renderTree(state)
+        this._callSubscriber()
+    }
 }
 
 
-export default state
+    export default store

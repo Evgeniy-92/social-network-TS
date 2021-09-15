@@ -1,16 +1,15 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Posts from './Posts/Posts';
-import {PostDataType, ProfilePageType} from '../../../redux/state';
+import {ProfilePageType} from '../../../redux/redux-store';
 
 type MyPostsPropsType = {
     profilePage: ProfilePageType
     addPostCallback: () => void
-    postChange: (value: string) => void
-
+    changeHandlerCallback: (newValue: string) => void
 }
 
-function MyPosts(props: MyPostsPropsType) {
+function  MyPosts(props: MyPostsPropsType) {
 
     const postElement = props.profilePage.postData.map(p => <Posts message={p.message} likesCount={p.likesCount}/>)
 
@@ -22,7 +21,7 @@ function MyPosts(props: MyPostsPropsType) {
 
     const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const newValue = e.currentTarget.value
-        props.postChange(newValue)
+        props.changeHandlerCallback(newValue)
     }
 
     return (
