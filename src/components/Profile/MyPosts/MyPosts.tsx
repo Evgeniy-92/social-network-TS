@@ -1,13 +1,9 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Posts from './Posts/Posts';
-import {ProfilePageType} from '../../../redux/redux-store';
+import {MyPostsPropsType} from './MyPostsContainer';
 
-type MyPostsPropsType = {
-    profilePage: ProfilePageType
-    addPostCallback: () => void
-    changeHandlerCallback: (newValue: string) => void
-}
+
 
 function  MyPosts(props: MyPostsPropsType) {
 

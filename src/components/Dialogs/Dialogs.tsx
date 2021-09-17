@@ -2,22 +2,15 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import {DialogsPageType} from '../../redux/redux-store';
-
-
-type DialogsPropsType = {
-    dialogsPage: DialogsPageType
-    sendMessageCallback: () => void
-    changeHandlerCallback: (newValue: string) => void
-}
+import {DialogsPropsType} from './DialogsContainer';
 
 
 function Dialogs(props: DialogsPropsType) {
 
 
-    const dialogElement = props.dialogsPage.dialogsData.map(d => <DialogItem name={d.name} avatar={d.avatar}
+    const dialogElement = props.dialogsPage.dialogsData.map(d => <DialogItem key={d.id} name={d.name} avatar={d.avatar}
                                                                              id={d.id}/>)
-    const messageElement = props.dialogsPage.messagesData.map(m => <Message message={m.message}/>)
+    const messageElement = props.dialogsPage.messagesData.map(m => <Message key={m.id} message={m.message}/>)
 
     let valueTextarea = props.dialogsPage.newMessageText
 

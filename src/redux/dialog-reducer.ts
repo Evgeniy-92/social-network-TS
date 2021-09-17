@@ -1,7 +1,17 @@
-import {ActionType, DialogDataType, DialogsPageType, MessagesDataType} from './store';
+import {ActionType} from './redux-store';
 
 const SEND_MESSAGE = 'SEND-MESSAGE'
 const MESSAGE_TEXT_CHANGE = 'MESSAGE-TEXT-CHANGE'
+
+export type DialogType = {
+    id: number
+    name: string
+    avatar: string
+}
+export type MessagesType = {
+    id: number
+    message: string
+}
 
 let initialState = {
         dialogsData: [
@@ -12,29 +22,35 @@ let initialState = {
             {id: 5, name: "Dmitriy", avatar: "https://cs-site.ru/uploads/posts/2020-09/1599743334_40.jpg"},
             {id: 6, name: "Kristina", avatar: "https://www.meme-arsenal.com/memes/5166d05c57fdc25fe08c2aab0e59ef63.jpg"},
             {id: 7, name: "Tatyana", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZuWO0rilu76gqedyA8-fXVMeSWUp97REVc1CIEp98H5al8k5wcKWOSmCXgCLRZXr3h0M&usqp=CAU"},
-        ],
+        ] as Array<DialogType>,
         messagesData: [
             {id: 1, message: "Hi"},
             {id: 2, message: "How is your it-kamasutra"},
             {id: 3, message: "YoYoYo"},
-        ],
+        ] as Array<MessagesType>,
         newMessageText: ''
     }
 
-export const dialogReducer = (state: DialogsPageType = initialState, action: ActionType) => {
+export type DialogsInitialStateType = typeof initialState
+
+export const dialogReducer = (state: DialogsInitialStateType = initialState, action: ActionType): DialogsInitialStateType => {
     switch (action.type) {
-        case 'SEND-MESSAGE':
-            const newMessage: MessagesDataType = {
+        case 'SEND-MESSAGE': {
+            const newMessage: MessagesType = {
                 id: 4,
                 message: state.newMessageText
             }
-            state.messagesData.push(newMessage)
-            state.newMessageText = ''
-            return state
+            const stateCopy = {...state, messagesData: [...state.messagesData, newMessage]}
+            stateCopy.newMessageText = ''
+            return stateCopy
+        }
 
-        case 'MESSAGE-TEXT-CHANGE':
-            state.newMessageText = action.value
-            return state
+        case 'MESSAGE-TEXT-CHANGE': {
+            return {
+                ...state,
+                newMessageText: action.value
+            }
+        }
 
         default:
             return state
