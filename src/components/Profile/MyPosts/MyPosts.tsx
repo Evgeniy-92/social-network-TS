@@ -7,9 +7,9 @@ import {MyPostsPropsType} from './MyPostsContainer';
 
 function  MyPosts(props: MyPostsPropsType) {
 
-    const postElement = props.profilePage.postData.map(p => <Posts message={p.message} likesCount={p.likesCount}/>)
+    const postElement = props.posts.map(p => <Posts message={p.message} likesCount={p.likesCount}/>)
 
-    const valueTextarea = props.profilePage.newPostText
+    const valueTextarea = props.newPostText
 
     const addPost = () => {
         props.addPostCallback()

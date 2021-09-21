@@ -1,5 +1,3 @@
-import {ActionType} from './redux-store';
-
 const ADD_POST = 'ADD-POST'
 const POST_TEXT_CHANGE = 'POST-TEXT-CHANGE'
 
@@ -22,26 +20,29 @@ export type ProfileInitialStateType = typeof initialState
 
 export const profileReducer = (state: ProfileInitialStateType = initialState, action: ActionType): ProfileInitialStateType => {
     switch (action.type) {
-        case 'ADD-POST': {
+        case 'ADD-POST':
             const newPost: PostType = {
                 id: 4,
                 message: state.newPostText,
                 likesCount: 0
             }
-            const stateCopy = {...state, postData: [...state.postData, newPost]}
-            stateCopy.newPostText = ''
-            return stateCopy
-        }
-        case 'POST-TEXT-CHANGE': {
+            return {
+                ...state,
+                postData: [...state.postData, newPost],
+                newPostText: ''
+            }
+        case 'POST-TEXT-CHANGE':
             return {
                 ...state,
                 newPostText: action.value
             }
-        }
         default:
             return state
     }
 }
+
+type ActionType = ReturnType<typeof addPostAC> | ReturnType<typeof postTextChangeAC>
+
 export const addPostAC = () => {
     return {
         type: ADD_POST

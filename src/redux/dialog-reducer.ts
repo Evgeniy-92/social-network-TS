@@ -1,5 +1,3 @@
-import {ActionType} from './redux-store';
-
 const SEND_MESSAGE = 'SEND-MESSAGE'
 const MESSAGE_TEXT_CHANGE = 'MESSAGE-TEXT-CHANGE'
 
@@ -35,27 +33,27 @@ export type DialogsInitialStateType = typeof initialState
 
 export const dialogReducer = (state: DialogsInitialStateType = initialState, action: ActionType): DialogsInitialStateType => {
     switch (action.type) {
-        case 'SEND-MESSAGE': {
+        case SEND_MESSAGE:
             const newMessage: MessagesType = {
                 id: 4,
                 message: state.newMessageText
             }
-            const stateCopy = {...state, messagesData: [...state.messagesData, newMessage]}
-            stateCopy.newMessageText = ''
-            return stateCopy
-        }
-
-        case 'MESSAGE-TEXT-CHANGE': {
+            return {
+                ...state,
+                messagesData: [...state.messagesData, newMessage],
+                newMessageText: ''
+            }
+        case MESSAGE_TEXT_CHANGE:
             return {
                 ...state,
                 newMessageText: action.value
             }
-        }
-
         default:
             return state
     }
 }
+
+type ActionType = ReturnType<typeof sendMessageAC> | ReturnType<typeof messageTextChangeAC>
 
 export const sendMessageAC = () => {
     return {

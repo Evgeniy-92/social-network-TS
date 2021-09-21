@@ -1,4 +1,3 @@
-import {ActionType} from './redux-store';
 
 export type FriendType = {
     id: number
@@ -24,4 +23,8 @@ export const sidebarReducer = (state: SidebarInitialStateType = initialState, ac
 
 
     return state
+}
+
+type ActionType = {
+
 }

@@ -25,8 +25,9 @@ function Navbar(props: NavbarPropsType) {
                 <NavLink to="/music" activeClassName={s.active}>Music</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to="/settings" activeClassName={s.active}>Settings</NavLink>
+                <NavLink to="/users" activeClassName={s.active}>Users</NavLink>
             </div>
+
 
             <div className={s.friendsBlock}>
                 <h2>Friends</h2>

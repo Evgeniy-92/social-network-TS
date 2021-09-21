@@ -8,11 +8,11 @@ import {DialogsPropsType} from './DialogsContainer';
 function Dialogs(props: DialogsPropsType) {
 
 
-    const dialogElement = props.dialogsPage.dialogsData.map(d => <DialogItem key={d.id} name={d.name} avatar={d.avatar}
+    const dialogElement = props.dialogs.map(d => <DialogItem key={d.id} name={d.name} avatar={d.avatar}
                                                                              id={d.id}/>)
-    const messageElement = props.dialogsPage.messagesData.map(m => <Message key={m.id} message={m.message}/>)
+    const messageElement = props.messages.map(m => <Message key={m.id} message={m.message}/>)
 
-    let valueTextarea = props.dialogsPage.newMessageText
+    let valueTextarea = props.newMessageText
 
     const sendMessage = () => {
         props.sendMessageCallback()
