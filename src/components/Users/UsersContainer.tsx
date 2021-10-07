@@ -1,12 +1,11 @@
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
-import {Dispatch} from 'redux';
 import {
-    changeCurrentPageAC, changeIsFetchingAC,
-    followAC,
-    setTotalUserCountAC,
-    setUsersAC,
-    unfollowAC,
+    changeCurrentPage, changeIsFetching,
+    follow,
+    setTotalUserCount,
+    setUsers,
+    unfollow,
     User
 } from '../../redux/users-reducer';
 import React from 'react';
@@ -83,27 +82,12 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        follow: (id: number) => {
-            dispatch(followAC(id))
-        },
-        unfollow: (id: number) => {
-            dispatch(unfollowAC(id))
-        },
-        setUsers: (users: Array<User>) => {
-            dispatch(setUsersAC(users))
-        },
-        changeCurrentPage: (numberPage: number) => {
-            dispatch(changeCurrentPageAC(numberPage))
-        },
-        setTotalUserCount: (totalCount: number) => {
-            dispatch(setTotalUserCountAC(totalCount))
-        },
-        changeIsFetching: (value: boolean) => {
-            dispatch(changeIsFetchingAC(value))
-        },
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    changeCurrentPage,
+    setTotalUserCount,
+    changeIsFetching,
+})(UsersContainer)
