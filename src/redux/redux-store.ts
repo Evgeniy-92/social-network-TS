@@ -21,5 +21,5 @@ export let store = createStore(rootReducer)
 
 
 
-declare let window: any
+// @ts-ignore
 window.store = store
