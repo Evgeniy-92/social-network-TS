@@ -17,7 +17,7 @@ export class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.changeIsFetching(true)
-        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+        axios.get('https://social-network.samuraijs.com/api/1.0/users', {withCredentials: true})
             .then(response => {
                 this.props.changeIsFetching(false)
                 this.props.setUsers(response.data.items)
@@ -28,7 +28,7 @@ export class UsersContainer extends React.Component<UsersPropsType> {
     onPageChanged = (pageNumber: number) => {
         this.props.changeIsFetching(true)
         this.props.changeCurrentPage(pageNumber)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`, {withCredentials: true})
             .then(response => {
                 this.props.changeIsFetching(false)
                 this.props.setUsers(response.data.items)
