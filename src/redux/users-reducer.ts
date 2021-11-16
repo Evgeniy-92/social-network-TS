@@ -18,7 +18,8 @@ export const initialState = {
     pageSize: 10,
     totalUserCount: 0,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    buttonActivity: [] as Array<number>,
 }
 
 export type UsersInitialStateType = typeof initialState
@@ -43,12 +44,21 @@ export const usersReducer = (state: UsersInitialStateType = initialState, action
             return {...state, totalUserCount: action.totalCount}
         case 'CHANGE-IS-FETCHING':
             return {...state, isFetching: action.value}
+        case "BUTTON-ACTIVITY-TOGGLE":
+            return {
+                ...state,
+                buttonActivity: action.value
+                    ? [...state.buttonActivity, action.userID]
+                    : state.buttonActivity.filter(id => id != action.userID)
+            }
         default:
             return state
     }
 }
 
-type ActionType = ReturnType<typeof follow> | ReturnType<typeof unfollow> | ReturnType<typeof setUsers> | ReturnType<typeof changeCurrentPage> | ReturnType<typeof setTotalUserCount> | ReturnType<typeof changeIsFetching>
+type ActionType = ReturnType<typeof follow> | ReturnType<typeof unfollow> | ReturnType<typeof setUsers>
+    | ReturnType<typeof changeCurrentPage> | ReturnType<typeof setTotalUserCount>
+    | ReturnType<typeof changeIsFetching> | ReturnType<typeof buttonActivityToggle>
 
 export const follow = (id: number) => ({type: 'FOLLOW', id} as const)
 export const unfollow = (id: number) => ({type: 'UNFOLLOW', id} as const)
@@ -56,3 +66,4 @@ export const setUsers = (users: Array<User>) => ({type: 'SET-USERS', users} as c
 export const changeCurrentPage = (numberPage: number) => ({type: 'CHANGE-CURRENT-PAGE', numberPage} as const)
 export const setTotalUserCount = (totalCount: number) => ({type: 'SET-TOTAL-USER-COUNT', totalCount} as const)
 export const changeIsFetching = (value: boolean) => ({type: 'CHANGE-IS-FETCHING', value } as const)
+export const buttonActivityToggle = (value: boolean, userID: number) => ({type: 'BUTTON-ACTIVITY-TOGGLE', value, userID } as const)

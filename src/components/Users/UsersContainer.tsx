@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
+    buttonActivityToggle,
     changeCurrentPage, changeIsFetching,
     follow,
     setTotalUserCount,
@@ -40,13 +41,15 @@ export class UsersContainer extends React.Component<UsersPropsType> {
             <>
                 {this.props.isFetching ? <Preloader/> : null}
                 <Users
-                users={this.props.users}
-                pageSize={this.props.pageSize}
-                totalUserCount={this.props.totalUserCount}
-                currentPage={this.props.currentPage}
-                onPageChanged={this.onPageChanged}
-                follow={this.props.follow}
-                unfollow={this.props.unfollow}
+                    users={this.props.users}
+                    pageSize={this.props.pageSize}
+                    totalUserCount={this.props.totalUserCount}
+                    currentPage={this.props.currentPage}
+                    onPageChanged={this.onPageChanged}
+                    follow={this.props.follow}
+                    unfollow={this.props.unfollow}
+                    buttonActivity={this.props.buttonActivity}
+                    buttonActivityToggle={this.props.buttonActivityToggle}
                 />
             </>
         )
@@ -59,6 +62,7 @@ type MapStatePropsType = {
     totalUserCount: number
     currentPage: number
     isFetching: boolean
+    buttonActivity: Array<number>
 }
 
 type mapDispatchPropsType = {
@@ -68,6 +72,7 @@ type mapDispatchPropsType = {
     changeCurrentPage: (numberPage: number) => void
     setTotalUserCount: (totalCount: number) => void
     changeIsFetching: (value: boolean) => void
+    buttonActivityToggle: (value: boolean, userID: number) => void
 }
 
 export type UsersPropsType = MapStatePropsType & mapDispatchPropsType
@@ -75,10 +80,11 @@ export type UsersPropsType = MapStatePropsType & mapDispatchPropsType
 const mapStateToProps = (state: AppStateType) => {
     return {
         users: state.usersPage.users,
-        pageSize : state.usersPage.pageSize,
+        pageSize: state.usersPage.pageSize,
         totalUserCount: state.usersPage.totalUserCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        buttonActivity: state.usersPage.buttonActivity,
     }
 }
 
@@ -90,4 +96,5 @@ export default connect(mapStateToProps, {
     changeCurrentPage,
     setTotalUserCount,
     changeIsFetching,
+    buttonActivityToggle,
 })(UsersContainer)
