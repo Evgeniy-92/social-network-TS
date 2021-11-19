@@ -3,8 +3,6 @@ import userPhoto from '../../assets/images/images.jpg';
 import React from 'react';
 import {User} from '../../redux/users-reducer';
 import { NavLink } from 'react-router-dom';
-import axios from "axios";
-import {followAPI} from "../../api/api";
 
 type UsersPropsType = {
     users: Array<User>
@@ -12,10 +10,9 @@ type UsersPropsType = {
     totalUserCount: number
     currentPage: number
     onPageChanged: (pageNumber: number) => void
-    follow: (id: number) => void
-    unfollow: (id: number) => void
+    followTC: (id: number) => void
+    unfollowTC: (id: number) => void
     buttonActivity: Array<number>
-    buttonActivityToggle: (value: boolean, userID: number) => void
 }
 
 
@@ -54,28 +51,12 @@ export function Users(props: UsersPropsType) {
                         <div>
                             {
                                 u.followed
-                                    ? <button disabled={props.buttonActivity.some(id => id === u.id)} onClick={() => {
-                                        props.buttonActivityToggle(true, u.id)
-                                        followAPI.unfollowed(u.id)
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    props.unfollow(u.id)
-                                                }
-                                                props.buttonActivityToggle(false, u.id)
-                                            })
-
-                                    }}>Unfollowed</button>
-                                    : <button disabled={props.buttonActivity.some(id => id === u.id)} onClick={() => {
-                                        props.buttonActivityToggle(true, u.id)
-                                        followAPI.followed(u.id)
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    props.follow(u.id)
-                                                }
-                                                props.buttonActivityToggle(false, u.id)
-                                            })
-
-                                    }}>Followed</button>
+                                    ? <button disabled={props.buttonActivity.some(id => id === u.id)}
+                                              onClick={() => {props.unfollowTC(u.id)}}>
+                                        Unfollowed</button>
+                                    : <button disabled={props.buttonActivity.some(id => id === u.id)}
+                                              onClick={() => {props.followTC(u.id)}}>
+                                        Followed</button>
                             }
                         </div>
                     </div>

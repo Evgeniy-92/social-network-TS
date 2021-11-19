@@ -1,3 +1,6 @@
+import {Dispatch} from "redux";
+import {profileAPI} from "../api/api";
+
 const ADD_POST = 'ADD-POST'
 const POST_TEXT_CHANGE = 'POST-TEXT-CHANGE'
 
@@ -80,10 +83,16 @@ export const postTextChangeAC = (postText: string) => {
         value: postText
     } as const
 }
-
 export const setUserProfile = (profile: ProfileType) => {
     return {
         type: 'SET-USER-PROFILE',
         profile
     } as const
+}
+
+export const getUserProfile = (userID: string) => (dispatch: Dispatch) => {
+    profileAPI.getProfile(userID)
+        .then(data => {
+            dispatch(setUserProfile(data))
+        })
 }

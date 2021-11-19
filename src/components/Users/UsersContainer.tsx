@@ -2,38 +2,23 @@ import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
     buttonActivityToggle,
-    changeCurrentPage, changeIsFetching,
-    follow,
-    setTotalUserCount,
-    setUsers,
-    unfollow,
+    changeCurrentPage,
+    followTC, getUsersTC,
+    unfollowTC,
     User
 } from '../../redux/users-reducer';
 import React from 'react';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
-import {usersAPI} from "../../api/api";
 
 export class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
-        this.props.changeIsFetching(true)
-        usersAPI.getUsers(this.props.pageSize, this.props.currentPage)
-            .then(data => {
-                this.props.changeIsFetching(false)
-                this.props.setUsers(data.items)
-                this.props.setTotalUserCount(data.totalCount)
-            })
+        this.props.getUsersTC(this.props.pageSize, this.props.currentPage)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.changeIsFetching(true)
-        this.props.changeCurrentPage(pageNumber)
-        usersAPI.getUsers(this.props.pageSize, pageNumber)
-            .then(data => {
-                this.props.changeIsFetching(false)
-                this.props.setUsers(data.items)
-            })
+        this.props.getUsersTC(this.props.pageSize, pageNumber)
     }
 
     render() {
@@ -46,10 +31,9 @@ export class UsersContainer extends React.Component<UsersPropsType> {
                     totalUserCount={this.props.totalUserCount}
                     currentPage={this.props.currentPage}
                     onPageChanged={this.onPageChanged}
-                    follow={this.props.follow}
-                    unfollow={this.props.unfollow}
+                    followTC={this.props.followTC}
+                    unfollowTC={this.props.unfollowTC}
                     buttonActivity={this.props.buttonActivity}
-                    buttonActivityToggle={this.props.buttonActivityToggle}
                 />
             </>
         )
@@ -66,13 +50,11 @@ type MapStatePropsType = {
 }
 
 type mapDispatchPropsType = {
-    follow: (id: number) => void
-    unfollow: (id: number) => void
-    setUsers: (users: Array<User>) => void
+    followTC: (id: number) => void
+    unfollowTC: (id: number) => void
     changeCurrentPage: (numberPage: number) => void
-    setTotalUserCount: (totalCount: number) => void
-    changeIsFetching: (value: boolean) => void
     buttonActivityToggle: (value: boolean, userID: number) => void
+    getUsersTC: (pageSize: number, currentPage: number) => void
 }
 
 export type UsersPropsType = MapStatePropsType & mapDispatchPropsType
@@ -90,11 +72,9 @@ const mapStateToProps = (state: AppStateType) => {
 
 
 export default connect(mapStateToProps, {
-    follow,
-    unfollow,
-    setUsers,
+    followTC,
+    unfollowTC,
     changeCurrentPage,
-    setTotalUserCount,
-    changeIsFetching,
     buttonActivityToggle,
+    getUsersTC,
 })(UsersContainer)
