@@ -7,9 +7,12 @@ import {
     unfollowTC,
     User
 } from '../../redux/users-reducer';
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
+import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+
 
 export class UsersContainer extends React.Component<UsersPropsType> {
 
@@ -71,10 +74,10 @@ const mapStateToProps = (state: AppStateType) => {
 }
 
 
-export default connect(mapStateToProps, {
-    followTC,
-    unfollowTC,
-    changeCurrentPage,
-    buttonActivityToggle,
-    getUsersTC,
-})(UsersContainer)
+export default compose<ComponentType>(
+    connect(mapStateToProps, {
+        followTC, unfollowTC, changeCurrentPage,
+        buttonActivityToggle, getUsersTC,
+    }),
+    withAuthRedirect
+)(UsersContainer)
