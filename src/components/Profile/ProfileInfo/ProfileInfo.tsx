@@ -1,12 +1,14 @@
 import React from "react";
 import s from "./ProfileInfo.module.css";
-import {ProfileType} from '../../../redux/profile-reducer';
 import {Preloader} from '../../common/Preloader/Preloader';
 import Status from "./Status";
+import {ResponseGetProfileType} from "../../../api/api";
+import {updateStatus} from "../../../redux/profile-reducer";
 
 type ProfileInfoPropsType = {
-    profile: ProfileType
-
+    profile: ResponseGetProfileType
+    status: string
+    updateStatus: (status: string) => void
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
@@ -21,7 +23,10 @@ function ProfileInfo(props: ProfileInfoPropsType) {
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large} alt=""/>
                 discr
-                <Status status={'Hello world'}/>
+                <Status
+                    status={props.status}
+                    updateStatus={props.updateStatus}
+                />
             </div>
         </div>
     )

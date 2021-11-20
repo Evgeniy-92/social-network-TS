@@ -29,16 +29,60 @@ export const followAPI = {
 
 export const profileAPI = {
     getProfile(userID: string) {
-        return instance.get('https://social-network.samuraijs.com/api/1.0/profile/' + userID)
-            .then(res => res.data)
+        return instance.get<ResponseGetProfileType>('profile/' + userID)
+            .then(res => {
+                return res.data})
+    },
+    getStatus(userID: string) {
+        return instance.get<string>('profile/status/' + userID)
+            .then(res => {
+                return res.data
+            })
+    },
+    updateStatus(status: string) {
+        return instance.put<ResponseUpdateStatusType>('profile/status/', {status})
+            .then(res => {
+                return res.data
+            })
     }
 }
 
 export const authAPI = {
     getAuthMe() {
         return instance.get<getResponseType>(`auth/me`)
-            .then(res => res.data)
+            .then(res => {
+                return res.data
+            })
     }
+}
+
+type ResponseUpdateStatusType = {
+    resultCode: number
+    messages: Array<string>,
+    data: {}
+    fieldsErrors: Array<string>
+}
+
+type ContactsProfileType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+}
+
+export type ResponseGetProfileType = {
+    aboutMe: string
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: ContactsProfileType
+    photos: {small: string, large: string}
+
 }
 
 type PostAndDeleteResponseType = {
