@@ -1,9 +1,7 @@
 import React, {ComponentType} from 'react';
 import {
-    DialogsInitialStateType,
     DialogType,
     MessagesType,
-    messageTextChangeAC,
     sendMessageAC
 } from '../../redux/dialog-reducer';
 import Dialogs from './Dialogs';
@@ -16,12 +14,10 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 type MapStatePropsType ={
     dialogs: Array<DialogType>
     messages: Array<MessagesType>
-    newMessageText: string
 }
 
 type MapDispatchPropsType = {
-    sendMessageCallback: () => void
-    changeHandlerCallback: (newValue: string) => void
+    sendMessageCallback: (newMessage: string) => void
 }
 
 export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
@@ -30,18 +26,14 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         dialogs: state.dialogsPage.dialogsData,
         messages: state.dialogsPage.messagesData,
-        newMessageText: state.dialogsPage.newMessageText,
     }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        sendMessageCallback: () => {
-            dispatch(sendMessageAC())
+        sendMessageCallback: (newMessage: string) => {
+            dispatch(sendMessageAC(newMessage))
         },
-        changeHandlerCallback: (newValue: string) => {
-            dispatch(messageTextChangeAC(newValue))
-        }
     }
 }
 

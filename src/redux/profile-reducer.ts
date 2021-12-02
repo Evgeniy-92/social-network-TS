@@ -2,7 +2,6 @@ import {Dispatch} from "redux";
 import {profileAPI, ResponseGetProfileType} from "../api/api";
 
 const ADD_POST = 'ADD-POST'
-const POST_TEXT_CHANGE = 'POST-TEXT-CHANGE'
 const SET_STATUS = 'SET-STATUS'
 const CHANGE_STATUS = 'CHANGE-STATUS'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
@@ -13,17 +12,6 @@ export type PostType = {
     likesCount: number
 }
 
-export type ContactsType = {
-    facebook: string
-    website: string
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: string
-    github: string
-    mainLink: string
-}
-
 
 let initialState = {
     postData: [
@@ -31,7 +19,6 @@ let initialState = {
         {id: 2, message: "Ho Ho Ho", likesCount: 7},
         {id: 3, message: "Yo Yo Yo", likesCount: 45},
     ] as Array<PostType>,
-    newPostText: '',
     profile: {} as ResponseGetProfileType,
     status: '',
 }
@@ -42,18 +29,12 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
         case 'ADD-POST':
             const newPost: PostType = {
                 id: 4,
-                message: state.newPostText,
+                message: action.newPost,
                 likesCount: 0
             }
             return {
                 ...state,
                 postData: [...state.postData, newPost],
-                newPostText: ''
-            }
-        case 'POST-TEXT-CHANGE':
-            return {
-                ...state,
-                newPostText: action.value
             }
         case 'SET-USER-PROFILE':
             return {
@@ -76,23 +57,18 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
 }
 
 type ActionType = ReturnType<typeof addPostAC>
-    | ReturnType<typeof postTextChangeAC>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
     | ReturnType<typeof changeStatus>
 
 
-export const addPostAC = () => {
+export const addPostAC = (newPost: string) => {
     return {
-        type: ADD_POST
+        type: ADD_POST,
+        newPost
     } as const
 }
-export const postTextChangeAC = (postText: string) => {
-    return {
-        type: POST_TEXT_CHANGE,
-        value: postText
-    } as const
-}
+
 export const setUserProfile = (profile: ResponseGetProfileType) => {
     return {
         type: SET_USER_PROFILE,
