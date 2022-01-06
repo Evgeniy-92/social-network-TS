@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
     headers: {
-        'api-key': 'aa0a58e5-acc8-4916-88a6-1d587f1745ae'
+        'api-key': '2001bc12-c152-42bc-ace8-0356c6077198'
     },
 })
 
@@ -53,7 +53,36 @@ export const authAPI = {
             .then(res => {
                 return res.data
             })
+    },
+    login(data: LoginParamsType) {
+        return instance.post<LoginParamsType, AxiosResponse<LoginPostResponseType>>('/auth/login', data)
+            .then(res => {
+                return res.data
+            })
+    },
+    logout() {
+        return instance.delete<LoginPostResponseType>('/auth/login')
+            .then(res => {
+                return res.data
+            })
     }
+}
+// type
+export type LoginPostResponseType = {
+    resultCode: number
+    messages: Array<string>,
+    data: {userID: number}
+    fieldsErrors: Array<string>
+}
+
+export type FormikErrorType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+}
+
+export type LoginParamsType = FormikErrorType & {
+    captcha?: boolean
 }
 
 type ResponseUpdateStatusType = {

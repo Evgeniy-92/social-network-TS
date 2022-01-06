@@ -6,9 +6,7 @@ import NavbarContainer from './components/Navbar/NavbarContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from "./components/Header/HeaderContainer";
-import {Login} from "./Login/Login";
-
-
+import LoginContainer from "./Login/LoginFormik";
 
 
 function App() {
@@ -28,7 +26,7 @@ function App() {
                         <UsersContainer/>}
                     />
                     <Route path={"/login"} render={() =>
-                        <Login/>}
+                        <LoginContainer/>}
                     />
                 </div>
 

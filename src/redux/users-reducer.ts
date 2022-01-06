@@ -53,6 +53,11 @@ export const usersReducer = (state: UsersInitialStateType = initialState, action
                     ? [...state.buttonActivity, action.userID]
                     : state.buttonActivity.filter(id => id != action.userID)
             }
+        case "SET-CURRENT-PAGE":
+            return {
+                ...state,
+                currentPage: action.value
+            }
         default:
             return state
     }
@@ -61,6 +66,7 @@ export const usersReducer = (state: UsersInitialStateType = initialState, action
 type ActionType = ReturnType<typeof follow> | ReturnType<typeof unfollow> | ReturnType<typeof setUsers>
     | ReturnType<typeof changeCurrentPage> | ReturnType<typeof setTotalUserCount>
     | ReturnType<typeof changeIsFetching> | ReturnType<typeof buttonActivityToggle>
+    | ReturnType<typeof setCurrentPage>
 
 export const follow = (id: number) => ({type: 'FOLLOW', id} as const)
 export const unfollow = (id: number) => ({type: 'UNFOLLOW', id} as const)
@@ -69,6 +75,7 @@ export const changeCurrentPage = (numberPage: number) => ({type: 'CHANGE-CURRENT
 export const setTotalUserCount = (totalCount: number) => ({type: 'SET-TOTAL-USER-COUNT', totalCount} as const)
 export const changeIsFetching = (value: boolean) => ({type: 'CHANGE-IS-FETCHING', value } as const)
 export const buttonActivityToggle = (value: boolean, userID: number) => ({type: 'BUTTON-ACTIVITY-TOGGLE', value, userID } as const)
+export const setCurrentPage = (value: number) => ({type: 'SET-CURRENT-PAGE', value, } as const)
 
 
 export const getUsersTC = (pageSize: number, currentPage: number) => (dispatch: Dispatch) => {
@@ -78,6 +85,7 @@ export const getUsersTC = (pageSize: number, currentPage: number) => (dispatch: 
             dispatch(changeIsFetching(false))
             dispatch(setUsers(data.items))
             dispatch(setTotalUserCount(data.totalCount))
+            dispatch(setCurrentPage(currentPage))
         })
 }
 

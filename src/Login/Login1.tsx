@@ -11,7 +11,7 @@ export function LoginForm(props: InjectedFormProps<FormDataType>) {
     return(
             <form onSubmit={props.handleSubmit}>
                 <div>
-                    <Field placeholder={'Login'} name={'login'} component={'input'}/>
+                    <Field placeholder={'Login1'} name={'login'} component={'input'}/>
                 </div>
                 <div>
                     <Field placeholder={'Password'} name={'password'} component={'input'}/>
@@ -30,7 +30,7 @@ const LoginReduxForm = reduxForm<FormDataType>({
     form: 'login'
 })(LoginForm)
 
-export function Login() {
+export function Login1() {
     const onSubmit = (formData: FormDataType) => {
         console.log(formData)
     }
