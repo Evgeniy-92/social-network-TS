@@ -39,7 +39,7 @@ export const setIsAuthAndLogin = (userID: number | null, email: string | null, l
 
 
 export const getAuthUserData = () => (dispatch: Dispatch) => {
-    authAPI.getAuthMe()
+    return authAPI.getAuthMe()
         .then(data => {
             if (data.resultCode === 0) {
                 const {id, email, login} = data.data

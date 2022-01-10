@@ -90,14 +90,14 @@ export const changeStatus = (status: string) => {
 
 
 
-export const getUserProfile = (userID: string) => (dispatch: Dispatch) => {
+export const getUserProfile = (userID: string | number | null) => (dispatch: Dispatch) => {
     profileAPI.getProfile(userID)
         .then(data => {
             dispatch(setUserProfile(data))
         })
 }
 
-export const getStatus = (userID: string) => (dispatch: Dispatch) => {
+export const getStatus = (userID: string | number | null) => (dispatch: Dispatch) => {
     profileAPI.getStatus(userID)
         .then(data => {
             dispatch(setStatus(data))

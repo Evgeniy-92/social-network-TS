@@ -17,9 +17,12 @@ import {ResponseGetProfileType} from "../../api/api";
 class ProfileContainer extends React.Component<PropsType> {
 
     componentDidMount() {
-        let userID = this.props.match.params.userID
+        let userID: string | number | null = this.props.match.params.userID
         if (!userID) {
-            userID = '19620'
+            userID = this.props.userID
+            if (!userID) {
+                this.props.history.push('/login')
+            }
         }
         this.props.getUserProfile(userID)
         this.props.getStatus(userID)
@@ -42,11 +45,12 @@ type PathParamsType = {
 type mapStateToPropsType = {
     profile: ResponseGetProfileType
     status: string
+    userID: number | null
 }
 type mapDispatchToPropsType = {
     setUserProfile: (profile: ResponseGetProfileType) => void
-    getUserProfile: (userID: string) => void
-    getStatus: (userID: string) => void
+    getUserProfile: (userID: string | number | null) => void
+    getStatus: (userID: string | number | null) => void
     updateStatus: (status: string) => void
 }
 
@@ -57,6 +61,7 @@ export type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPr
 let mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
+    userID: state.auth.userID
 })
 
 

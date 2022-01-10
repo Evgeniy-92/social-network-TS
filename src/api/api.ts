@@ -28,12 +28,12 @@ export const followAPI = {
 }
 
 export const profileAPI = {
-    getProfile(userID: string) {
+    getProfile(userID: string | number | null) {
         return instance.get<ResponseGetProfileType>('profile/' + userID)
             .then(res => {
                 return res.data})
     },
-    getStatus(userID: string) {
+    getStatus(userID: string | number | null) {
         return instance.get<string>('profile/status/' + userID)
             .then(res => {
                 return res.data

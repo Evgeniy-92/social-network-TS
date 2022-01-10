@@ -79,5 +79,4 @@ export default compose<ComponentType>(
         followTC, unfollowTC, changeCurrentPage,
         buttonActivityToggle, getUsersTC,
     }),
-    withAuthRedirect
 )(UsersContainer)
