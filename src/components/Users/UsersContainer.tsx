@@ -73,7 +73,6 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-
 export default compose<ComponentType>(
     connect(mapStateToProps, {
         followTC, unfollowTC, changeCurrentPage,
