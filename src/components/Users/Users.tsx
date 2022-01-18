@@ -2,7 +2,8 @@ import s from './Users.module.css';
 import userPhoto from '../../assets/images/images.jpg';
 import React from 'react';
 import {User} from '../../redux/users-reducer';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
+import {Pagination} from "../common/Pagination/Pagination";
 
 type UsersPropsType = {
     users: Array<User>
@@ -16,46 +17,39 @@ type UsersPropsType = {
 }
 
 
-
 export function Users(props: UsersPropsType) {
 
-    const numberPages = Math.ceil(props.totalUserCount / props.pageSize)
-    const pages = []
-    for (let i = 1; i <= numberPages; i++) {
-        pages.push(i)
-    }
-
-
     return (
-        <div>
-            {
-                pages.map(p => {
-                    return (
-                        <span
-                            onClick={() => props.onPageChanged(p)}
-                            className={p === props.currentPage ? s.activePagesStyle : s.pagesStyle}
-                        >
-                                {p}
-                        </span>
-                    )
-                })
-            }
+        <div className={s.usersContainer}>
+            <Pagination
+                totalItemsCount={props.totalUserCount}
+                pageSize={props.pageSize}
+                onPageChanged={props.onPageChanged}
+                currentPage={props.currentPage}
+            />
 
             {
                 props.users.map(u => <div className={s.wrapper} key={u.id}>
                     <div>
                         <NavLink to={'/profile/' + u.id}>
-                            <img className={s.userPhoto} src={u.photos.small != null ? u.photos.small : userPhoto}/>
+                            <img className={s.userPhoto}
+                                 src={u.photos.small != null ? u.photos.small : userPhoto}/>
                         </NavLink>
 
                         <div>
                             {
                                 u.followed
-                                    ? <button disabled={props.buttonActivity.some(id => id === u.id)}
-                                              onClick={() => {props.unfollowTC(u.id)}}>
+                                    ? <button
+                                        disabled={props.buttonActivity.some(id => id === u.id)}
+                                        onClick={() => {
+                                            props.unfollowTC(u.id)
+                                        }}>
                                         Unfollowed</button>
-                                    : <button disabled={props.buttonActivity.some(id => id === u.id)}
-                                              onClick={() => {props.followTC(u.id)}}>
+                                    : <button
+                                        disabled={props.buttonActivity.some(id => id === u.id)}
+                                        onClick={() => {
+                                            props.followTC(u.id)
+                                        }}>
                                         Followed</button>
                             }
                         </div>

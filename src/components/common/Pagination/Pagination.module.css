@@ -1,0 +1,21 @@
+.paginationContainer {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.pagesStyle {
+    cursor: pointer;
+    border: 1px solid gray;
+    padding: 3px;
+}
+
+.activePagesStyle {
+    padding: 3px;
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+.button{
+    cursor: pointer;
+}
