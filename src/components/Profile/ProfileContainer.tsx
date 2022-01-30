@@ -3,7 +3,7 @@ import Profile from './Profile';
 import {connect} from 'react-redux';
 import {
     getStatus,
-    getUserProfile,
+    getUserProfile, savePhoto,
     setUserProfile,
     updateStatus
 } from '../../redux/profile-reducer';
@@ -16,7 +16,7 @@ import {ResponseGetProfileType} from "../../api/api";
 
 class ProfileContainer extends React.Component<PropsType> {
 
-    componentDidMount() {
+    refreshProfile() {
         let userID: string | number | null = this.props.match.params.userID
         if (!userID) {
             userID = this.props.userID
@@ -28,9 +28,25 @@ class ProfileContainer extends React.Component<PropsType> {
         this.props.getStatus(userID)
     }
 
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (this.props.match.params.userID !== prevProps.match.params.userID) {
+            this.refreshProfile()
+
+        }
+    }
+
     render() {
         return (
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile
+                {...this.props}
+                isOwner={!this.props.match.params.userID}
+                profile={this.props.profile}
+                savePhoto={this.props.savePhoto}
+            />
         )
     }
 }
@@ -52,6 +68,7 @@ type mapDispatchToPropsType = {
     getUserProfile: (userID: string | number | null) => void
     getStatus: (userID: string | number | null) => void
     updateStatus: (status: string) => void
+    savePhoto: (file: any) => void
 }
 
 export type ProfileContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
@@ -66,7 +83,7 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
 
 
 export default compose<ComponentType>(
-    connect(mapStateToProps, {setUserProfile, getUserProfile, getStatus, updateStatus}),
+    connect(mapStateToProps, {setUserProfile, getUserProfile, getStatus, updateStatus, savePhoto}),
     withRouter,
     withAuthRedirect
 )(ProfileContainer)
